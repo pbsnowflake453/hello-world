@@ -1,10 +1,10 @@
-int(input("Please enter a number:"))
-def factorial(input):
-    return(range(input,1,-1))
-nums=(list(factorial(input)))
-def fact(input):
+f=int(input("Please enter a number:"))
+def factorial(f):
+    return(range(f,1,-1))
+nums=(list(factorial(f)))
+def fact(b):
     total=1
-    for i in input:
+    for i in b:
         total=total*i
     return total
 print (fact(nums))
