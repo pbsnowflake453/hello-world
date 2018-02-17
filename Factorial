@@ -1,0 +1,10 @@
+int(input("Please enter a number:"))
+def factorial(input):
+    return(range(input,1,-1))
+nums=(list(factorial(input)))
+def fact(input):
+    total=1
+    for i in input:
+        total=total*i
+    return total
+print (fact(nums))
