@@ -1,0 +1,16 @@
+def is_prime(x):
+  if x < 0:
+    return False
+  y = range(2, x)
+  print y
+  for num in y:
+    if x % num == 0:
+      return False
+  if x == 0:
+    return False
+  elif x == 1:
+    return False
+  elif x == 2:
+    return True
+  else:
+    return True
