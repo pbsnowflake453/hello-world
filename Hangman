@@ -1,7 +1,7 @@
 import random
 
 #word list for hangman
-word_list = ['apple', 'penis', 'watermelon', 'moist', 'onomatopoeia', 'fellatio']
+word_list = ['apple', 'pants', 'watermelon', 'moist', 'onomatopoeia', 'fellow']
 
 random_word = random.choice(word_list)
 
@@ -14,14 +14,14 @@ blanks = "_ " * len(random_word)
 
 print ("Your word has " + str(word_length) + " letters.")
 print (blanks)
-word = []
+word = ["_ " * (len(word))]
 not_in_word = []
 #add blanks for word length?
 
 guess_count = range(1, 100)
 
 def check(num):
-    print ("Possible letters: " + str(word))
+    print (word)
     print ("Incorrect letters: " + str(not_in_word))
     guess = input("Guess a letter: ")
     if guess in word:
@@ -29,7 +29,13 @@ def check(num):
     else:
         if guess in random_word:
             print ("Good guess! Your word has the letter " + str(guess) + ".")
-            word.append(guess)
+            index = -1
+            for x in random_word:
+                if x == guess:
+                    index += 1
+            word.insert(index, guess)
+            word.pop(index + 1)
+                    
         else:
             not_in_word.append(guess)
             print ("Sorry, try again.")
@@ -41,4 +47,3 @@ for x in guess_count:
         break
     else:
         check(guess_count)
-    
