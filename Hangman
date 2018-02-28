@@ -14,7 +14,7 @@ blanks = "_ " * len(random_word)
 
 print ("Your word has " + str(word_length) + " letters.")
 print (blanks)
-word = ["_ " * (len(word))]
+word = ["_ " * (len(random_word))]
 not_in_word = []
 #add blanks for word length?
 
@@ -31,8 +31,10 @@ def check(num):
             print ("Good guess! Your word has the letter " + str(guess) + ".")
             index = -1
             for x in random_word:
-                if x == guess:
+                if x != guess:
                     index += 1
+                else:
+                    break
             word.insert(index, guess)
             word.pop(index + 1)
                     
