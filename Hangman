@@ -1,7 +1,7 @@
 import random
 
 #word list for hangman
-word_list = ['angel', 'pants', 'dog', 'moist', 'monkey', 'fangs']
+word_list = ['doggo', 'moistness', 'fellow']
 
 random_word = random.choice(word_list)
 
@@ -25,11 +25,21 @@ def check(num):
         print ("You've already guessed that letter!")
     elif guess in keep_track:
         print ("You've already guessed that letter!")
+    elif guess == random_word:
+        print ("Congratulations! You've won!")
     else:
         if guess in random_word:
             count = random_word_list.count(guess)
             if count > 1:
-                print ("Good guess! The letter "+str(guess)+" is in the word "+str(count)+"times.")
+                print ("Good guess! The letter "+str(guess)+" is in the word "+str(count)+" times.")
+                start = 0
+                for x in range(1,count+1):
+                    index = random_word_list.index(guess, start)
+                    guessed_word_list.insert(index, guess)
+                    guessed_word_list.pop(index+1)
+                    start = index+1                    
+                print (guessed_word_list)
+                print ("Incorrect letters: " + str(not_in_word))
             else:
                 print ("Good guess! Your word contains the letter " + str(guess) + ".")
                 index = random_word_list.index(guess)
@@ -46,7 +56,7 @@ def check(num):
             
 for x in guess_count:
     if guessed_word_list == random_word_list:
-        print ("You've guessed all the letters!")
+        print ("Congratulations! You've guessed all the letters! The word is "+random_word+".")
         break
     elif x == 11:
         print ("You lose!")
