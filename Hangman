@@ -1,7 +1,7 @@
 import random
 
 #word list for hangman
-word_list = ['apple', 'pants', 'watermelon', 'moist', 'onomatopoeia', 'fellow']
+word_list = ['angel', 'pants', 'dog', 'moist', 'monkey', 'fangs']
 
 random_word = random.choice(word_list)
 
@@ -9,34 +9,46 @@ user_name = input("Welcome to Hangman. Please enter your name: ")
 
 print ("Hello " + user_name + "!")
 
-word = "_ " * (len(random_word))
-
+guessed_word = "_" * (len(random_word))
+guessed_word_list = list(guessed_word)
+random_word_list = list(random_word)
+keep_track = []
 print ("Your word has " + str(len(random_word)) + " letters.")
 not_in_word = []
 #add blanks for word length?
 
-guess_count = range(1, 100)
+guess_count = range(1, 12)
 
 def check(num):
-    print (word)
-    print ("Incorrect letters: " + str(not_in_word))
     guess = input("Guess a letter: ")
-    if guess in word:
+    if guess in not_in_word:
+        print ("You've already guessed that letter!")
+    elif guess in keep_track:
         print ("You've already guessed that letter!")
     else:
         if guess in random_word:
-            print ("Good guess! Your word has the letter " + str(guess) + ".")
-            index = random_word.find(guess)
-            word = word[:index] + guess + word[index:]
-                    
+            count = random_word_list.count(guess)
+            if count > 1:
+                print ("Good guess! The letter "+str(guess)+" is in the word "+str(count)+"times.")
+            else:
+                print ("Good guess! Your word contains the letter " + str(guess) + ".")
+                index = random_word_list.index(guess)
+                guessed_word_list.insert(int(index), str(guess))
+                guessed_word_list.pop(index+1)
+                keep_track.append(guess)
+                print (guessed_word_list)
+                print ("Incorrect letters: " + str(not_in_word))        
         else:
             not_in_word.append(guess)
             print ("Sorry, try again.")
-
+            print (guessed_word_list)
+            print ("Incorrect letters: " + str(not_in_word))
+            
 for x in guess_count:
-    if len(word) == len(random_word):
+    if guessed_word_list == random_word_list:
         print ("You've guessed all the letters!")
-        print ("Possible letters: " + str(word))
         break
+    elif x == 11:
+        print ("You lose!")
     else:
         check(guess_count)
