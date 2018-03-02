@@ -1,0 +1,43 @@
+#This creates a random list of grades from an inputted desired average for each student.
+
+import random
+from pprint import pprint
+
+#fills roster with students for each homeroom
+roster = {}
+count = 1
+for x in range(1, 25):
+    code = "H"+ str(count)
+    roster[code]=[]
+    count += 1
+count = 1
+for x in range(1, 24):
+    code = "W"+ str(count)
+    roster[code]=[]
+    count += 1
+
+grade_list = [] #empty list for grades to be put in
+
+grade_range = range(60, 101) #to ensure no one scores less than 68 or higher than 100
+    
+num = int(input("Enter the number of grades you need: " ))
+
+#fills grade_list with random grades
+def randomizer():
+    for x in range(num):
+        random_grade = random.choice(grade_range)
+        grade_list.append(random_grade)
+        
+#finds random combination of grades that provides desired average and adds it to roster        
+for student in roster:
+    goal_avg = int(input("Enter the desired average for " +student+": "))
+    if goal_avg < grade_range[0]:
+        print ("Error. Average too low.")
+    else:
+        while True:
+            grade_list = [] #empties the list for each loop
+            randomizer() 
+            if sum(grade_list) == (goal_avg * num):
+                roster[student] = grade_list
+                break
+pprint(roster)
