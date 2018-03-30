@@ -1,58 +1,53 @@
-#This creates a random list of grades from an inputted desired average for each student.
+#This program creates a random list of grades from an inputted desired average for each student.
+
 import random
 
-#fills roster with students for each homeroom
 wallace_names = "Jenny Dalton Derek Elijah Wesley Drake Lucy Josh Tristan Brooke Christian Karina Samuel AnnaP Niko Jackson Riley Emily Hayden Jeremiah AnnaW Richie Zaria"
-wallace = wallace_names.split(" ")
-hall_names = "Estrella Jonathan Aveiona Cameron Brandon Aiden Braylan Deagan Maggie Kaden Damarian Colin Talon Suyash Grace Derek Haydin Natalie Shelley William Joshua Lillian Harmony Lucy"
-hall = hall_names.split(" ")
-gradebook = {}
-i=1
-for name in wallace:
-    if i < 10:
-        name = "w0%s %s" %(i, name)
-        gradebook[name] = ""
-        i+=1
-    else:
-        name = "w%s %s" %(i, name)
-        gradebook[name] = ""
-        i+=1
-i=1
-for name in hall:
-    if i < 10:
-        name = "h0%s %s" %(i, name)
-        gradebook[name] = ""
-        i+=1
-    else:
-        name = "h%s %s" %(i, name)
-        gradebook[name] = ""
-        i+=1
-grade_list = [] #empty list for grades to be put in
 
-grade_range = range(60, 101) #to ensure no one scores less than 68 or higher than 100
-    
-num = int(input("Enter the number of grades you need: " ))
+hall_names = "Estrella Jonathan Aveiona Cameron Brandon Aiden Braylan Deagan Maggie Kaden Damarian Colin Talon Suyash Grace Derek Haydin Natalie Shelley William Joshua Lillian Harmony Lucy"
+
+sample_names = "Jenny Dalton Derek"
+
+gradebook = {} #empty dictionary
+
+def gradebook_fill(roster):
+    roster = roster.split(" ")
+    i=1
+    for name in roster:
+        if i < 10:
+            name = "0%s %s" %(i, name)
+            gradebook[name] = ""
+            i+=1
+        else:
+            name = "%s %s" %(i, name)
+            gradebook[name] = ""
+            i+=1
+
+grade_range = range(50, 101)
 
 #fills grade_list with random grades
-def randomizer():
-    for x in range(num):
-        random_grade = random.choice(grade_range)
-        grade_list.append(random_grade)
+
         
 #finds random combination of grades that provides desired average and adds it to roster        
-for student in gradebook:
-    goal_avg = int(input("Enter the desired average for %s: " % student))
-    if goal_avg < grade_range[0]:
-        print ("Error. Average too low.")
-    else:
-        while True:
-            grade_list = [] #empties the list for each loop
-            randomizer() 
-            if sum(grade_list) == (goal_avg * num):
-                gradebook[student] = grade_list
-                break
-                
-f= open("gradebook.txt", "a")
-for k, v in sorted(gradebook.items()):
-    f.write("\n%s%s\n" %(k, v))
-f.close()
+def grade_creator(gradebook):
+    num = int(input("Enter the number of grades you need: "))
+    for student in gradebook:
+        goal_avg = int(input("Enter the desired average for %s: " % student))
+        while True:    
+            if goal_avg not in grade_range:
+                print ("Error. Average not in range.")
+            else:
+                grade_list = [] #empties the list for each loop
+                for x in range(num):
+                    random_grade = random.choice(grade_range)
+                    grade_list.append(random_grade) 
+                if sum(grade_list) == (goal_avg * num):
+                    gradebook[student] = grade_list
+                    break
+    f= open("gradebook.txt", "a")
+    for k, v in sorted(gradebook.items()):
+        f.write("\n%s%s\n" %(k, v))
+    f.close()
+    
+gradebook_fill(sample_names)
+grade_creator(gradebook)
