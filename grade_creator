@@ -1,21 +1,32 @@
 #This creates a random list of grades from an inputted desired average for each student.
-
 import random
-from pprint import pprint
 
 #fills roster with students for each homeroom
-roster = {}
-count = 1
-for x in range(1, 25):
-    code = "H"+ str(count)
-    roster[code]=[]
-    count += 1
-count = 1
-for x in range(1, 24):
-    code = "W"+ str(count)
-    roster[code]=[]
-    count += 1
-
+wallace_names = "Jenny Dalton Derek Elijah Wesley Drake Lucy Josh Tristan Brooke Christian Karina Samuel AnnaP Niko Jackson Riley Emily Hayden Jeremiah AnnaW Richie Zaria"
+wallace = wallace_names.split(" ")
+hall_names = "Estrella Jonathan Aveiona Cameron Brandon Aiden Braylan Deagan Maggie Kaden Damarian Colin Talon Suyash Grace Derek Haydin Natalie Shelley William Joshua Lillian Harmony Lucy"
+hall = hall_names.split(" ")
+gradebook = {}
+i=1
+for name in wallace:
+    if i < 10:
+        name = "w0%s %s" %(i, name)
+        gradebook[name] = ""
+        i+=1
+    else:
+        name = "w%s %s" %(i, name)
+        gradebook[name] = ""
+        i+=1
+i=1
+for name in hall:
+    if i < 10:
+        name = "h0%s %s" %(i, name)
+        gradebook[name] = ""
+        i+=1
+    else:
+        name = "h%s %s" %(i, name)
+        gradebook[name] = ""
+        i+=1
 grade_list = [] #empty list for grades to be put in
 
 grade_range = range(60, 101) #to ensure no one scores less than 68 or higher than 100
@@ -29,8 +40,8 @@ def randomizer():
         grade_list.append(random_grade)
         
 #finds random combination of grades that provides desired average and adds it to roster        
-for student in roster:
-    goal_avg = int(input("Enter the desired average for " +student+": "))
+for student in gradebook:
+    goal_avg = int(input("Enter the desired average for %s: " % student))
     if goal_avg < grade_range[0]:
         print ("Error. Average too low.")
     else:
@@ -38,6 +49,10 @@ for student in roster:
             grade_list = [] #empties the list for each loop
             randomizer() 
             if sum(grade_list) == (goal_avg * num):
-                roster[student] = grade_list
+                gradebook[student] = grade_list
                 break
-pprint(roster)
+                
+f= open("gradebook.txt", "a")
+for k, v in sorted(gradebook.items()):
+    f.write("\n%s%s\n" %(k, v))
+f.close()
