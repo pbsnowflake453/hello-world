@@ -1,0 +1,46 @@
+import random
+from datetime import date
+from grade_creator import wallace_names, hall_names, sample_names
+
+class Student(object):
+       
+    def __init__(self, name):
+        self.name = name
+        self.avg = ""
+        while self.avg not in range(50, 101):
+            try:
+                self.avg = int(input("Enter avg for {}: ".format(self.name)))
+            except (NameError, SyntaxError):
+                print "Invalid. Try again."
+           
+    def generate_grades(self, num):
+        target_sum = self.avg * num
+        grade_list = []
+        while sum(grade_list) != target_sum:
+            grade_list = [random.choice(range(50, 101)) for i in range(num)]
+        return self.name, grade_list     
+        
+def ask_how_many():
+    while True:
+            try:
+                num = int(input("Enter number of grades needed: "))
+                break
+            except (NameError, SyntaxError):
+                print "Invalid. Try again."
+    return num
+
+def main(roster):
+    gradebook = []
+    num = ask_how_many()
+    for name in roster.split(" "):
+        student = Student(name)
+        grades = student.generate_grades(num)
+        gradebook.append(grades) 
+    f = open("grades{}.txt".format(date.today()), "w")
+    for line in gradebook:
+        f.write("{}\n\n".format(line))
+    f.close()
+    
+if __name__ == '__main__':
+    main(wallace_names)
+    main(hall_names)
